@@ -7,7 +7,7 @@ app = 'tailnet-mullvad-socks-router'
 primary_region = 'lax'
 
 [build]
-  image = 'docker.io/heywoodlh/tailscale-mullvad-router:1.94.2'
+  image = 'docker.io/heywoodlh/tailscale-mullvad-router:1.104.7'
 
 [[mounts]]
   source = 'tailscale'
