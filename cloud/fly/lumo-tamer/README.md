@@ -5,7 +5,7 @@ OpenAI-compatible API. This deployment runs the API server on Fly with a
 Tailscale sidecar, reachable only from the tailnet as:
 
 ```
-http://lumo.barn-banana.ts.net:3003
+http://lumo.barn-banana.ts.net
 ```
 
 Nothing is published through Fly's proxy (`fly.toml` has no `[[services]]`
@@ -39,8 +39,13 @@ fly deploy
 - `LUMO_VAULT_KEY` encrypts `sessions/vault.enc`. Changing it makes the existing
   Proton session unreadable, so keep it.
 
+The API listens on port 80, so it is reachable at the bare tailnet hostname with
+no port suffix. The port is the `LUMO_PORT` env var (default `80`) and is only
+used when `config.yaml` is first generated; edit `/app/data/config.yaml` to
+change it later.
+
 The hostname flag is `--hostname=lumo` in `start.sh`; that is what produces
-`lumo.barn-banana.ts.net`. Tailnet ACLs must allow `tcp:3003` to this node.
+`lumo.barn-banana.ts.net`. Tailnet ACLs must allow `tcp:80` to this node.
 
 On the first boot the machine stays up but the API server is paused, because
 lumo-tamer refuses to start without a Proton session.
@@ -111,13 +116,13 @@ After any of these, `fly apps restart heywoodlh-lumo-tamer` and check:
 
 ```sh
 fly logs -a heywoodlh-lumo-tamer
-curl http://lumo.barn-banana.ts.net:3003/health
+curl http://lumo.barn-banana.ts.net/health
 ```
 
 ## Using the API
 
 ```sh
-curl http://lumo.barn-banana.ts.net:3003/v1/chat/completions \
+curl http://lumo.barn-banana.ts.net/v1/chat/completions \
   -H "Authorization: Bearer $LUMO_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{"model":"lumo","messages":[{"role":"user","content":"hello"}]}'

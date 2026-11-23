@@ -86,6 +86,6 @@ RUN chmod +x /start.sh
 ENV NODE_ENV=production
 
 # Not published to Fly's proxy: the API is reachable over the tailnet only.
-EXPOSE 3003
+EXPOSE 80
 
 CMD ["/start.sh"]

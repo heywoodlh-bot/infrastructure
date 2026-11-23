@@ -4,6 +4,10 @@ set -eu
 DATA_DIR="/app/data"
 VAULT_PATH="${DATA_DIR}/sessions/vault.enc"
 
+# The container runs as root, so binding 80 is fine. Only used when
+# config.yaml is first generated; change the volume's config.yaml afterwards.
+LUMO_PORT="${LUMO_PORT:-80}"
+
 if [ -z "${LUMO_API_KEY:-}" ]; then
   echo "FATAL: LUMO_API_KEY is not set (fly secrets set LUMO_API_KEY=...)" >&2
   exit 1
@@ -40,7 +44,7 @@ auth:
 
 server:
   apiKey: "${LUMO_API_KEY}"
-  port: 3003
+  port: ${LUMO_PORT}
 EOF
 fi
 
