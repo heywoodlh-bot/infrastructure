@@ -13,3 +13,8 @@ primary_region = 'lax'
   memory = '1gb'
   cpu_kind = 'shared'
   cpus = 1
+
+[[mounts]]
+  source = 'tailscale'
+  destination = '/var/lib/tailscale'
+  initial_size = '1gb'
