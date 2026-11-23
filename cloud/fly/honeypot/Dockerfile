@@ -6,6 +6,7 @@ RUN mkdir -p /logs /web \
     && ln -s /logs/log_session.json /web
 
 COPY run.sh /run.sh
+COPY prune-logs.sh /prune-logs.sh
 
 WORKDIR /logs
 
